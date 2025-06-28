@@ -4,7 +4,7 @@ This repo shows an issue with recent [@stripe/stripe-react-native](stripe-react-
 
 It seems as the payment strip on an iPhone times-out when calling `confirmPlatformPayPayment` despite the fact that the payment completed succesfully. The response from the call is `Success`, and you can see the payment completed in Stripe dashboard.
 
-Screen-recording of the issue:  
+Screen-recording of the issue can be found [here](./video/vid1.MP4):  
 <video src="./video/vid1.MP4" width="300" />
 
 ## Instructions
