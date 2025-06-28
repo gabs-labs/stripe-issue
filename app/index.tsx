@@ -8,8 +8,10 @@ import {
 import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
+const defaultAmount = '2000'
+
 export default function Index() {
-  const [amount, setAmount] = useState('2000')
+  const [amount, setAmount] = useState(defaultAmount)
   const [clientSecret, setClientSecret] = useState('')
   const [status, setStatus] = useState('')
   const [isPaySupported, setIsPaySupported] = useState(false);
@@ -55,7 +57,7 @@ export default function Index() {
           cartItems: [
             {
               label: "Products",
-              amount,
+              amount: (parseInt(amount, 10) / 100).toFixed(2),
               paymentType: PlatformPay.PaymentType.Immediate,
             }
           ],
@@ -65,17 +67,17 @@ export default function Index() {
       },
     );
 
-    console.log(`>>> ${new Date().toISOString()} >>> paid: error=${error} & status=${paymentIntent?.status}`)
+    console.log(`>>> ${new Date().toISOString()} >>> finished: error=${JSON.stringify(error)} & status=${paymentIntent?.status}`)
 
     if (error || paymentIntent?.status !== PaymentIntent.Status.Succeeded) {
-      setStatus(`Payment not completed: ${error}, ${paymentIntent?.status}`);
+      setStatus(`Payment not completed: ${JSON.stringify(error)}, ${paymentIntent?.status}`);
     }
 
     setStatus(`Payment completed: ${paymentIntent?.status}`)
   };
 
   const startOver = () => {
-    setAmount('2000')
+    setAmount(defaultAmount)
     setClientSecret('')
     setStatus('')
   }
@@ -108,6 +110,7 @@ export default function Index() {
           <Button onPress={startOver} title="Start Over"/>
         </>
       }
+      <Text>isPaySupported={JSON.stringify(isPaySupported)}</Text>
     </View>
   );
 }
@@ -124,6 +127,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 45,
+    width: '50%',
   },
   textInput: {
     width: '50%',

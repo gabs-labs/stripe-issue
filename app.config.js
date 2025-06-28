@@ -1,5 +1,4 @@
 module.exports = () => {
-  // const merchantIdentifier = process.env.APPLE_MERCHANT_ID;
   const slug = "stripe-issue"
   const iosBundleIdentifier = `uk.co.gabslabs.${slug}`;
 
@@ -33,7 +32,7 @@ module.exports = () => {
       [
         "@stripe/stripe-react-native",
         {
-          // merchantIdentifier,
+          merchantIdentifier: process.env.EXPO_PUBLIC_APPLE_MERCHANT_ID,
           enableGooglePay: false
         }
       ]
