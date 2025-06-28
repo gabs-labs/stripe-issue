@@ -13,6 +13,7 @@ const defaultAmount = '2000'
 export default function Index() {
   const [amount, setAmount] = useState(defaultAmount)
   const [clientSecret, setClientSecret] = useState('')
+  const [intentId, setIntentId] = useState('')
   const [status, setStatus] = useState('')
   const [isPaySupported, setIsPaySupported] = useState(false);
   
@@ -42,8 +43,9 @@ export default function Index() {
     const paymentIntent = await response.json()
     console.log(paymentIntent)
 
-    if (paymentIntent.client_secret) {
+    if (paymentIntent.client_secret && paymentIntent.id) {
       setClientSecret(paymentIntent.client_secret)
+      setIntentId(paymentIntent.id)
     }
   }
 
@@ -79,6 +81,7 @@ export default function Index() {
   const startOver = () => {
     setAmount(defaultAmount)
     setClientSecret('')
+    setIntentId('')
     setStatus('')
   }
 
@@ -106,6 +109,7 @@ export default function Index() {
       { status.length > 0 &&
         <>
           <Text style={styles.text}>3. Result</Text>
+          <Text style={styles.text}>Payment Intent ID={JSON.stringify(intentId)}</Text>
           <Text style={styles.text}>{status}</Text>
           <Button onPress={startOver} title="Start Over"/>
         </>
